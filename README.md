@@ -21,6 +21,8 @@ All frequencies are **year-normalized relative frequencies** returned directly b
 
 ## Pipeline overview
 
+You can run scripts from the notebook: "GoogleBooks_ngrams.ipynb"
+
 ### 1. Data extraction
 
 **Script:** `0_google_ngrams_ntf.py`  
