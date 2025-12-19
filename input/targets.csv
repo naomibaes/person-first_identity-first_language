@@ -1,0 +1,16 @@
+target,identity_first_singular,identity_first_plural,person_first_singular,person_first_plural
+schizophrenic,schizophrenic person,schizophrenic people,person with schizophrenia,people with schizophrenia
+psychotic,psychotic person,psychotic people,person with psychosis,people with psychosis
+alcoholic,alcoholic person,alcoholic people,person with alcoholism,people with alcoholism
+bipolar,bipolar person,bipolar people,person with bipolar,people with bipolar
+anorexic,anorexic person,anorexic people,person with anorexia,people with anorexia
+bulimic,bulimic person,bulimic people,person with bulimia,people with bulimia
+autistic,autistic person,autistic people,person with autism,people with autism
+mentally ill,mentally ill person,mentally ill people,person with mental illness | person with a mental illness,people with mental illness | people with a mental illness
+anxious,anxious person,anxious people,person with anxiety,people with anxiety
+depressed,depressed person,depressed people,person with depression,people with depression
+disabled,disabled person,disabled people,person with disability | person with a disability,people with disability | people with a disability
+diabetic,diabetic person,diabetic people,person with diabetes,people with diabetes
+obese,obese person,obese people,person with obesity,people with obesity
+epileptic,epileptic person,epileptic people,person with epilepsy,people with epilepsy
+dyslexic,dyslexic person,dyslexic people,person with dyslexia,people with dyslexia

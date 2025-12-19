@@ -1,0 +1,4 @@
+ML LRT (approx): LR=2149.130, df=1, p=0
+  ll_full=1063.462
+  ll_reduced=-11.103
+Note: This chi-square reference is approximate because variance components are tested on the boundary (0).

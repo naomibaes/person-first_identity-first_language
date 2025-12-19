@@ -1,0 +1,2 @@
+model_full,model_reduced,ll_full,ll_reduced,lr_stat,df,p_value_chi2_approx
+(1 + Year_z + Year_z2 | target),(0 + Year_z + Year_z2 | target),1063.4622424050876,-11.102966309842486,2149.1304174298602,1,0.0
