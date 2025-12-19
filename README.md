@@ -1,4 +1,4 @@
-# Identity-first vs person-first language in Google Books Ngrams
+# Identity-first vs person-first language (Google Books Ngrams and News on the Web)
 
 This repository contains a complete, reproducible pipeline for analysing long-run trends in **identity-first (IF)** versus **person-first (PF)** language in printed English using **Google Books Ngrams** (1940–2019).
 
