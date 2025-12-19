@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from pathlib import Path
 
 # ---------- config ----------
-INPUT_CSV = "output/identity_first_proportion_by_target.csv"
-OUTPUT_DIR = Path("output/plots") / "IF_proportion_by_target"
+INPUT_CSV = "output_GoogleBooks/identity_first_proportion_by_target.csv"
+OUTPUT_DIR = Path("output_GoogleBooks/plots") / "IF_proportion_by_target"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ---------- load data ----------

@@ -154,7 +154,7 @@ def main():
     p.add_argument(
         "--out_dir",
         type=str,
-        default="output/plots",
+        default="output_GoogleBooks/plots",
         help="Directory to save PNGs",
     )
     p.add_argument(

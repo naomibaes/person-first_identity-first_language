@@ -139,7 +139,7 @@ def main():
     )
     ap.add_argument("--targets_csv", type=str, default="targets.csv",
                     help="Path to targets.csv (must include: target, control, and IF/PF form columns).")
-    ap.add_argument("--out_wide_csv", type=str, default="data/output/ngram_relative_wide.csv",
+    ap.add_argument("--out_wide_csv", type=str, default="data/output_GoogleBooks/ngram_relative_wide.csv",
                     help="Output wide CSV: Year + one <term>_ntf column per term.")
     ap.add_argument("--out_long_csv", type=str, default="data/output/ngram_relative_long.csv",
                     help="Output long CSV: Year,target,form_type,term,ntf,control.")

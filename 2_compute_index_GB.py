@@ -2,6 +2,7 @@
 import argparse
 import pandas as pd
 import numpy as np
+from pathlib import Path
 
 def main():
     # ------------------------------
@@ -14,7 +15,7 @@ def main():
         "--input_csv",
         type=str,
         required=True,
-        help="Path to output/ngram_relative_long.csv"
+        help="Path to output_GoogleBooks/ngram_relative_long.csv"
     )
     parser.add_argument(
         "--min_year",
@@ -31,10 +32,20 @@ def main():
     parser.add_argument(
         "--output_csv",
         type=str,
-        default="output/identity_first_proportion_by_target.csv",
-        help="Where to save the output CSV"
+        default="output_GoogleBooks/identity_first_proportion_by_target.csv",
+        help="Where to save the per-target output CSV"
+    )
+    parser.add_argument(
+        "--output_dir",
+        type=str,
+        default=None,
+        help="Directory to save overall output CSVs. Default: same directory as --output_csv."
     )
     args = parser.parse_args()
+
+    out_by_target_path = Path(args.output_csv)
+    out_dir = Path(args.output_dir) if args.output_dir else out_by_target_path.parent
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     # ------------------------------
     # Load data
@@ -43,7 +54,8 @@ def main():
 
     expected_cols = {"Year", "form_type", "ntf", "target"}
     missing = expected_cols - set(df.columns)
-    assert not missing, f"Missing columns in df: {missing}"
+    if missing:
+        raise ValueError(f"Missing columns in df: {missing}")
 
     # ------------------------------
     # Apply year filtering
@@ -60,12 +72,8 @@ def main():
     # ------------------------------
     # Derive number and form_class
     # ------------------------------
-    df["number"] = df["form_type"].apply(
-        lambda x: "singular" if "sg" in x else "plural"
-    )
-    df["form_class"] = df["form_type"].apply(
-        lambda x: "IF" if x.startswith("IF") else "PF"
-    )
+    df["number"] = df["form_type"].apply(lambda x: "singular" if "sg" in str(x) else "plural")
+    df["form_class"] = df["form_type"].apply(lambda x: "IF" if str(x).startswith("IF") else "PF")
 
     # ------------------------------
     # Aggregate per target / year / number / form_class
@@ -95,23 +103,50 @@ def main():
         agg_wide["PF"] = 0.0
 
     # ------------------------------
-    # Compute IF proportion
+    # Compute per-target IF proportion
     # ------------------------------
     denom = agg_wide["IF"] + agg_wide["PF"]
-    agg_wide["IF_proportion"] = np.where(
-        denom > 0,
-        agg_wide["IF"] / denom,
-        np.nan
-    )
+    agg_wide["IF_proportion"] = np.where(denom > 0, agg_wide["IF"] / denom, np.nan)
 
     # ------------------------------
-    # Final output
+    # Save per-target output (existing behavior)
     # ------------------------------
     result = agg_wide[["target", "Year", "number", "IF", "PF", "IF_proportion"]]
-    result.to_csv(args.output_csv, index=False)
+    result.to_csv(out_by_target_path, index=False)
 
-    print(f"Saved IF/PF proportion table → {args.output_csv}")
+    # ------------------------------
+    # Compute OVERALL IF proportion (2 ways)
+    # ------------------------------
 
+    # 1) Unweighted mean across targets (mean of target-level proportions)
+    overall_unweighted = (
+        agg_wide
+        .groupby(["Year", "number"], as_index=False)["IF_proportion"]
+        .mean()
+    )
+
+    # 2) Weighted/pooled across targets (sum IF and PF then compute proportion)
+    overall_weighted = (
+        agg_wide
+        .groupby(["Year", "number"], as_index=False)[["IF", "PF"]]
+        .sum()
+    )
+    denom2 = overall_weighted["IF"] + overall_weighted["PF"]
+    overall_weighted["IF_proportion"] = np.where(denom2 > 0, overall_weighted["IF"] / denom2, np.nan)
+    overall_weighted = overall_weighted[["Year", "number", "IF", "PF", "IF_proportion"]]
+
+    # ------------------------------
+    # Save overall outputs
+    # ------------------------------
+    out_overall_unweighted = out_dir / "identity_first_proportion_overall_unweighted.csv"
+    out_overall_weighted = out_dir / "identity_first_proportion_overall_weighted.csv"
+
+    overall_unweighted.to_csv(out_overall_unweighted, index=False)
+    overall_weighted.to_csv(out_overall_weighted, index=False)
+
+    print(f"Saved per-target IF/PF proportion table → {out_by_target_path}")
+    print(f"Saved OVERALL IF proportion (unweighted mean across targets) → {out_overall_unweighted}")
+    print(f"Saved OVERALL IF proportion (weighted/pooled across targets) → {out_overall_weighted}")
 
 if __name__ == "__main__":
     main()

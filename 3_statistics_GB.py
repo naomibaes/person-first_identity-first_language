@@ -90,13 +90,13 @@ def main():
     parser.add_argument(
         "--input_csv",
         type=str,
-        default="output/identity_first_proportion_by_target.csv",
+        default="output_GoogleBooks/identity_first_proportion_by_target.csv",
         help="Input CSV with columns: target, Year, number, IF, PF, IF_proportion",
     )
     parser.add_argument(
         "--out_dir",
         type=str,
-        default="output/mixed_effects_long_run",
+        default="output_GoogleBooks/mixed_effects_long_run",
         help="Output directory for model summaries and parameter tables.",
     )
     parser.add_argument(
