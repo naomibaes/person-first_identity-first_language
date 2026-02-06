@@ -1,0 +1,2 @@
+Git commit: 74fb3fb
+Random-intercept LRT failed: ValueError('invalid start_params')

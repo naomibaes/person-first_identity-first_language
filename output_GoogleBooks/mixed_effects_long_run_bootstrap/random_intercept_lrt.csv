@@ -1,0 +1,2 @@
+model_full,model_reduced,ll_full,ll_reduced,lr_stat,df,p_value_chi2_approx,error,git_commit
+(re_formula=~ Year_z + Year_z2),(random intercept dropped),,,,1,,Random-intercept LRT failed: ValueError('invalid start_params'),74fb3fb

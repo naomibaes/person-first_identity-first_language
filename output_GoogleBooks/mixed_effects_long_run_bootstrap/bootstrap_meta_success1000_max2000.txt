@@ -1,0 +1,8 @@
+Git commit: 74fb3fb
+nsim_requested: 2000
+nsim_success: 1000
+nsim_failed: 0
+seed: 123
+fit_method: lbfgs
+stopped_early: True
+boot_re_formula: ~ Year_z + Year_z2
