@@ -147,6 +147,34 @@ def main():
     df = df.dropna(subset=["IF_proportion"]).copy()
     print(f"After filtering & NA-removal: {len(df):,} rows remain.")
 
+    # ---------------- ICC: unconditional random-intercept model ----------------
+    # ICC = Var(target intercept) / (Var(target intercept) + Var(residual))
+    print("\nComputing ICC from intercept-only random-intercept model:")
+    icc_model = smf.mixedlm(
+        "IF_proportion ~ 1",
+        data=df,
+        groups=df["target"],
+        re_formula="1",   # random intercept only
+    )
+    icc_res = icc_model.fit(method="lbfgs", reml=True)
+
+    var_target = float(icc_res.cov_re.iloc[0, 0])  # random intercept variance
+    var_resid = float(icc_res.scale)               # residual variance
+    icc = var_target / (var_target + var_resid)
+
+    print(f"  Var(target)  = {var_target:.6f}")
+    print(f"  Var(resid)   = {var_resid:.6f}")
+    print(f"  ICC          = {icc:.3f}")
+
+    # Save
+    icc_path = outdir / "icc_intercept_only.csv"
+    pd.DataFrame([{
+        "var_target_intercept": var_target,
+        "var_residual": var_resid,
+        "icc": icc
+    }]).to_csv(icc_path, index=False)
+    print(f"Saved ICC -> {icc_path}")
+    
     # ---------------- Fit mixed-effects model (REML) ----------------
     print("\nFitting mixed-effects model (REML):")
     print("  IF_proportion ~ Year_z + Year_z2 + number")
