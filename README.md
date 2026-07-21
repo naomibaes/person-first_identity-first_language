@@ -1,6 +1,6 @@
 # Identity-first vs person-first language 
 
-This repository contains a complete, reproducible pipeline for analysing long-run trends in **identity-first (IF)** versus **person-first (PF)** language in printed English using **Google Books Ngrams** (1940–2019).
+This repository contains a complete, reproducible pipeline for analysing long-run trends in **identity-first (IF)** versus **person-first (PF)** language in printed English using **Google Books Ngrams** (1940–2019). The visualization scripts contain **NOW** input data that cannot be added due to copyright restrictions which limit sharing of data. 
 
 The pipeline extracts normalized term frequencies, constructs identity-first usage indices, visualizes temporal trends, and estimates long-run change using mixed-effects models.
 
